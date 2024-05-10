@@ -1,0 +1,15 @@
+C:\Users\Duc\source\repos\Libary_Manager\bin\Debug\Libary_Manager.exe.config
+C:\Users\Duc\source\repos\Libary_Manager\bin\Debug\Libary_Manager.exe
+C:\Users\Duc\source\repos\Libary_Manager\bin\Debug\Libary_Manager.pdb
+C:\Users\Duc\source\repos\Libary_Manager\obj\Debug\Libary_Manager.csproj.AssemblyReference.cache
+C:\Users\Duc\source\repos\Libary_Manager\obj\Debug\Libary_Manager.csproj.SuggestedBindingRedirects.cache
+C:\Users\Duc\source\repos\Libary_Manager\obj\Debug\Libary_Manager.Properties.Resources.resources
+C:\Users\Duc\source\repos\Libary_Manager\obj\Debug\Libary_Manager.csproj.GenerateResource.cache
+C:\Users\Duc\source\repos\Libary_Manager\obj\Debug\Libary_Manager.csproj.CoreCompileInputs.cache
+C:\Users\Duc\source\repos\Libary_Manager\obj\Debug\Libary_Manager.exe
+C:\Users\Duc\source\repos\Libary_Manager\obj\Debug\Libary_Manager.pdb
+C:\Users\Duc\source\repos\Libary_Manager\bin\Debug\Guna.UI2.dll
+C:\Users\Duc\source\repos\Libary_Manager\obj\Debug\Libary_Manager.csproj.CopyComplete
+C:\Users\Duc\source\repos\Libary_Manager\obj\Debug\Libary_Manager.Libary_TrangChu.resources
+C:\Users\Duc\source\repos\Libary_Manager\obj\Debug\Libary_Manager.Libary_GUI.Libary_NhanVien.resources
+C:\Users\Duc\source\repos\Libary_Manager\obj\Debug\Libary_Manager.Libary_GUI.Libary_QuanLy.resources
