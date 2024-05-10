@@ -231,7 +231,6 @@
             this.DgvChiNhanh.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.DgvChiNhanh.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
             this.DgvChiNhanh.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvChiNhanh_CellClick);
-            this.DgvChiNhanh.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvChiNhanh_CellMouseClick);
             this.DgvChiNhanh.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvChiNhanh_KeyDown);
             // 
             // dataGridViewTextBoxColumn1
@@ -419,7 +418,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Libary_QuanLy";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Libary_QuanLy";
+            this.Text = "Thư Viện ( Quản Lý )";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.TabChiNhanh.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DgvChiNhanh)).EndInit();

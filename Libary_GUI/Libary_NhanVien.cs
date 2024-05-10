@@ -17,26 +17,30 @@ namespace Libary_Manager.Libary_GUI
 {
     public partial class Libary_NhanVien : Form
     {
+        int _PAGE = 1;
+
         // Lưu tạm tên ảnh 
         private bool isClickPhoto = false;
         private string namePhotoBook;
         private string namePhotoPresent;
-        // ____________________________________________________________
+
+        // ................................................
 
         private BUS_Sach sachBUS;
         private BUS_ChiNhanh chiNhanhBUS;
 
-        // ____________________________________________________________
+        // ................................................
 
         private DTO_Sach sachDTO;
 
-        // ____________________________________________________________
+        // ................................................
 
         public Libary_NhanVien()
         {
             InitializeComponent();
         }
-        // ____________________________________________________________
+
+        // ................................................
 
         // Chọn quản lý sách sách
         void TabSachThuVienAction()
@@ -48,8 +52,8 @@ namespace Libary_Manager.Libary_GUI
             this.chiNhanhBUS = new BUS_ChiNhanh();
 
             // Load toàn bộ danh sách Sách
-            DataTable data = sachBUS.getToanBoSach();
-            Controller.isPhotoLoad(data, DgvSachThuVien);
+            DataTable data = sachBUS.dataPagination(_PAGE);
+            Controller.isLoadData(data, DgvSachThuVien);
 
             // Load toàn bộ Chi nhánh vào thêm sách
             CbbChiNhanh.DataSource = chiNhanhBUS.getToanBoSach();
@@ -57,7 +61,7 @@ namespace Libary_Manager.Libary_GUI
             CbbChiNhanh.ValueMember = "chiNhanh";
         }
 
-        // ____________________________________________________________
+        // ................................................
 
         // Load form tương thích
         private void TcLibaryQuanLy_SelectedIndexChanged(object sender, EventArgs e)
@@ -71,7 +75,6 @@ namespace Libary_Manager.Libary_GUI
             }
         }
 
-        // Nhấn delete xóa
         private void DgvSachThuVien_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
@@ -123,7 +126,7 @@ namespace Libary_Manager.Libary_GUI
             }
         }
 
-        public bool isEmptys()
+        private  bool isEmptys()
         {
             String[] data = { TbTuaSach.Text, TbTacGia.Text,
         TbNhaXuatBan.Text, TbNamXuatBan.Text, TbLoiGioiThieu.Text, TbSoLuong.Text };
@@ -153,7 +156,7 @@ namespace Libary_Manager.Libary_GUI
 
                     // Load sách mới thêm
                     DataTable data = sachBUS.getToanBoSach();
-                    Controller.isPhotoLoad(data, DgvSachThuVien);
+                    Controller.isLoadData(data, DgvSachThuVien);
 
                     // Reset value 
                     CbbChiNhanh.SelectedIndex = 0;
@@ -190,11 +193,6 @@ namespace Libary_Manager.Libary_GUI
             }
         }
 
-        private void Libary_NhanVien_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Controller.isDeletePhotos();
-        }
-
         private void BtnChinhSuaSach_Click(object sender, EventArgs e)
         {
             if (isEmptys())
@@ -217,6 +215,10 @@ namespace Libary_Manager.Libary_GUI
 
                     // Cập nhật sửa
                     sachBUS.updateSach(sachDTO);
+
+                    // Load sách mới chỉnh
+                    DataTable data = sachBUS.getToanBoSach();
+                    Controller.isLoadData(data, DgvSachThuVien);
                 }
                 catch (Exception ex)
                 {
@@ -228,6 +230,12 @@ namespace Libary_Manager.Libary_GUI
                 Controller.isAlert("Vui lòng chọn 1 hàng thông tin!", "Lỗi xảy ra", MessageBoxIcon.Error);
             }
         }
+
+        private void Libary_NhanVien_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Controller.isDeletePhotos();
+        }
+
     }
 }
 

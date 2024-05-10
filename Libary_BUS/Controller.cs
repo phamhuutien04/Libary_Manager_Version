@@ -14,6 +14,8 @@ using Guna.UI2.WinForms;
 using System.Xml.Linq;
 using System.Security.Permissions;
 using System.Collections;
+using Libary_Manager.Libary_DAO;
+using System.Diagnostics;
 
 namespace Libary_Manager.Libary_BUS
 {
@@ -21,8 +23,12 @@ namespace Libary_Manager.Libary_BUS
     {
         // Đường dẫn tới ảnh sách 
         public static string _PATH_PHOTO_BOOK = @"C:\\Users\\Duc\\source\\repos\\Libary_Manager\\Photos\\Books\\";
+        
         // Thêm các ảnh muốn xóa vào 
         public static ArrayList DeletedPhotos = new ArrayList();
+
+        // Số lượng bản ghi mỗi page
+        public static int _MAX_PAGE = 6;
 
         // Kiểm tra giá trị có rỗng không 
         public static bool isEmpty(string value)
@@ -119,7 +125,7 @@ namespace Libary_Manager.Libary_BUS
 
 
         // Load dữ liệu 
-        public static void isPhotoLoad(DataTable dataTable, DataGridView dataGridView)
+        public static void isLoadData(DataTable dataTable, DataGridView dataGridView)
         {
             dataGridView.Rows.Clear();
             foreach (DataRow row in dataTable.Rows)
@@ -172,10 +178,17 @@ namespace Libary_Manager.Libary_BUS
                 string imagePath = image.ToString();
                 if (File.Exists(imagePath))
                 {
-                    MessageBox.Show(imagePath);
                     File.Delete(imagePath);
                 }
             }
-        }    
+        }
+
+
+        public static string isHandlePagination(int page, int total)
+        {
+            int Offset;
+            Offset = (page - 1) * total;
+            return " OFFSET " + Offset + " ROWS FETCH NEXT " + total + " ROWS ONLY" ?? "";
+        }
     }
 }

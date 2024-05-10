@@ -14,17 +14,48 @@ namespace Libary_Manager.Libary_DAO
     {
         public DataTable readSach()
         {
-            string sql = "SELECT maSach, tuaSach, photo, tacGia, nhaXuatBan, namXuatBan, " +
-                "TRIM(cn.chiNhanh) as chiNhanh, loiGioiThieu, soLuong, TV_Sach.ngayThem " +
-                "FROM TV_ChiNhanh cn " +
-                "INNER JOIN TV_Sach ON TV_Sach.maChiNhanh = cn.id ORDER BY TV_Sach.id DESC";
-            return Database.read(sql);
+            try
+            {
+                string sql = "SELECT maSach, tuaSach, photo, tacGia, nhaXuatBan, namXuatBan, " +
+                    "TRIM(cn.chiNhanh) as chiNhanh, loiGioiThieu, soLuong, TV_Sach.ngayThem " +
+                    "FROM TV_ChiNhanh cn " +
+                    "INNER JOIN TV_Sach ON TV_Sach.maChiNhanh = cn.id ORDER BY TV_Sach.id DESC";
+                return Database.read(sql);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi databse " + ex.Message, "Lỗi xảy ra", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        public int getRows()
+        {
+            try
+            {
+                string sql = "SELECT COUNT(id) FROM TV_Sach";
+                DataTable data = Database.read(sql);
+                return int.Parse(data.Rows[0][0].ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi databse " + ex.Message, "Lỗi xảy ra", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return -1;
+            }
         }
 
         public DataTable createMaSach()
         {
-            string sql = "SELECT TOP 1 maSach FROM TV_Sach ORDER BY id DESC";
-            return Database.read(sql);
+            try
+            {
+                string sql = "SELECT TOP 1 maSach FROM TV_Sach ORDER BY id DESC";
+                return Database.read(sql);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi databse " + ex.Message, "Lỗi xảy ra", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
         }
 
         public bool deleteSach(DTO_Sach sachDTO)
@@ -82,6 +113,11 @@ namespace Libary_Manager.Libary_DAO
                     { "soLuong", sachDTO.soLuong },
                 };
 
+                if (sachDTO.photo != null)
+                {
+                    data.Add("photo", sachDTO.photo);
+                }
+
                 string condition = " maSach = '" + sachDTO.maSach +"'";
                 Database.update("TV_Sach", data, condition); return true;
             }
@@ -98,7 +134,25 @@ namespace Libary_Manager.Libary_DAO
             {
                 string sql = "SELECT * FROM TV_Sach WHERE maSach = '" + sachDTO.maSach +"'";
                 DataTable data = Database.read(sql);
-                return data.Rows[0]["photo"].ToString();
+                if (data != null) return data.Rows[0]["photo"].ToString(); 
+                else return null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi databse " + ex.Message, "Lỗi xảy ra", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }    
+
+        public DataTable dataPagination(string offset)
+        {
+            try
+            {
+                string sql = "SELECT maSach, tuaSach, photo, tacGia, nhaXuatBan, namXuatBan, " +
+                    "TRIM(cn.chiNhanh) as chiNhanh, loiGioiThieu, soLuong, TV_Sach.ngayThem " +
+                    "FROM TV_ChiNhanh cn " +
+                    "INNER JOIN TV_Sach ON TV_Sach.maChiNhanh = cn.id ORDER BY TV_Sach.id DESC " + offset;
+                return Database.read(sql);
             }
             catch (Exception ex)
             {

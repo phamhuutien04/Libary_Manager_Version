@@ -18,24 +18,24 @@ namespace Libary_Manager.Libary_GUI
         // Xác nhận đã load dữ liệu Dgv
         private bool valueChangeDgvSach = false;
 
-        // ____________________________________________________________
+        // ................................................
 
         private BUS_Sach sachBUS;
         private BUS_ChiNhanh chiNhanhBUS;
 
-        // ____________________________________________________________
+        // ................................................
 
         private DTO_Sach sachDTO;
         private DTO_ChiNhanh chiNhanhDTO;
 
-        // ____________________________________________________________
+        // ................................................
 
         public Libary_QuanLy()
         {
             InitializeComponent();
         }
 
-        // ____________________________________________________________
+        // ................................................
 
         // Chọn quản lý chi nhánh 
         void TabChiNhanhAction()
@@ -57,7 +57,7 @@ namespace Libary_Manager.Libary_GUI
             this.chiNhanhBUS = new BUS_ChiNhanh();
         }
 
-        // ____________________________________________________________
+        // ................................................
 
         private void BtnChiNhanh_Click(object sender, EventArgs e)
         {
@@ -79,7 +79,7 @@ namespace Libary_Manager.Libary_GUI
             }
         }
 
-        // ____________________________________________________________
+        // ................................................
 
         // Load form tương thích
         private void TcLibaryQuanLy_SelectedIndexChanged(object sender, EventArgs e)
@@ -93,7 +93,7 @@ namespace Libary_Manager.Libary_GUI
             }
         }
 
-        // ____________________________________________________________
+        // ................................................
 
         // Chi nhánh
 
@@ -121,82 +121,6 @@ namespace Libary_Manager.Libary_GUI
             }
         }
 
-        // Chuột phải xóa
-        private void DgvChiNhanh_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && chiNhanhDTO.id != 0)
-                {
-                    if (Controller.isQuestion("Xóa chi nhánh Id: " + chiNhanhDTO.id, "Bạn có chắc muốn xóa chi nhánh"))
-                    {
-                        if (chiNhanhBUS.deleteChiNhanh(chiNhanhDTO))
-                        {
-                            DgvChiNhanh.DataSource = chiNhanhBUS.getToanBoSach();
-                        };
-                    }
-                }
-                else
-                {
-                    Controller.isAlert("Vui lòng chọn 1 hàng thông tin!", "Lỗi xảy ra", MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        // ____________________________________________________________
-
-        // Sách
-
-        // Chỉnh sửa sách
-        private void DgvSachThuVien_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            /*if (valueChangeDgvSach)
-            {
-                sachDTO.tuaSach = TbTuaSach.Text;
-                sachDTO.photo = "";
-                sachDTO.tacGia = TbTacGia.Text;
-                sachDTO.nhaXuatBan = TbNhaXuatBan.Text;
-                sachDTO.namXuatBan = TbNamXuatBan.Text;
-                sachDTO.maChiNhanh = CbbChiNhanh.Text;
-                sachDTO.soLuong = int.Parse(TbSoLuong.Text);
-                sachDTO.loiGioiThieu = TbLoiGioiThieu.Text;
-
-                // sachBUS.insertSach(sachDTO);
-            }*/
-        }
-
-        private void DgvSachThuVien_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                if (sachBUS.deleteSach(sachDTO)) { };
-            }
-        }
-
-        private void DgvSachThuVien_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && sachDTO.maSach != null)
-                {
-                    if (Controller.isQuestion("Xóa sách Id: " + sachDTO.id, "Bạn có chắc muốn xóa sách"))
-                    {
-                        
-                    }
-                }
-                else
-                {
-                    Controller.isAlert("Vui lòng chọn 1 hàng thông tin!", "Lỗi xảy ra", MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void BtnChonAnh_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog file = Controller.isOpenfile(OfdAnhSach);
-            // PtXemAnhTruoc.Image = Image.FromFile(file.FileName);
-        }
-
-        // ____________________________________________________________
+        // ................................................
     }
 }

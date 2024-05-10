@@ -12,8 +12,11 @@ using System.Windows.Forms;
 
 namespace Libary_Manager.Libary_BUS
 {
-    class BUS_Sach
+    class BUS_Sach 
     {
+        // Phân trang thư viện 
+        public static int _TOTAL_BOOK = -1;
+
         private DAO_Sach sachDAO;
 
         public BUS_Sach()
@@ -100,6 +103,25 @@ namespace Libary_Manager.Libary_BUS
             catch (Exception ex)
             {
                 Controller.isAlert("Không thể chỉnh sửa sách!", ex.Message, System.Windows.Forms.MessageBoxIcon.Error);
+                return null;
+            };
+        }
+
+        public DataTable dataPagination(int page)
+        {
+            try
+            {
+                if (_TOTAL_BOOK == -1)
+                {
+                    _TOTAL_BOOK = sachDAO.getRows();
+                }    
+                string offset = Controller.isHandlePagination(page, Controller._MAX_PAGE);
+
+                return sachDAO.dataPagination(offset);
+            }
+            catch (Exception ex)
+            {
+                Controller.isAlert("Không thể tải sách!", ex.Message, System.Windows.Forms.MessageBoxIcon.Error);
                 return null;
             };
         }    
