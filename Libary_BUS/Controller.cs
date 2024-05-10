@@ -12,12 +12,17 @@ using static Guna.UI2.Native.WinApi;
 using System.Drawing;
 using Guna.UI2.WinForms;
 using System.Xml.Linq;
+using System.Security.Permissions;
+using System.Collections;
 
 namespace Libary_Manager.Libary_BUS
 {
     class Controller
     {
+        // Đường dẫn tới ảnh sách 
         public static string _PATH_PHOTO_BOOK = @"C:\\Users\\Duc\\source\\repos\\Libary_Manager\\Photos\\Books\\";
+        // Thêm các ảnh muốn xóa vào 
+        public static ArrayList DeletedPhotos = new ArrayList();
 
         // Kiểm tra giá trị có rỗng không 
         public static bool isEmpty(string value)
@@ -157,5 +162,20 @@ namespace Libary_Manager.Libary_BUS
             }
         }
 
+
+        // Xóa bỏ khi chương trình tắt
+        public static void isDeletePhotos()
+        {
+            if (DeletedPhotos.Count > 0)
+            foreach (var image in DeletedPhotos)
+            {
+                string imagePath = image.ToString();
+                if (File.Exists(imagePath))
+                {
+                    MessageBox.Show(imagePath);
+                    File.Delete(imagePath);
+                }
+            }
+        }    
     }
 }

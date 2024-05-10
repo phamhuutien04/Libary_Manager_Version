@@ -2,6 +2,7 @@
 using Libary_Manager.Libary_BUS;
 using Libary_Manager.Libary_DTO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,13 +17,9 @@ namespace Libary_Manager.Libary_GUI
 {
     public partial class Libary_NhanVien : Form
     {
-
-
-        // Xác nhận đã load dữ liệu Dgv
-        private bool valueChangeDgvSach = false;
         // Lưu tạm tên ảnh 
-        private string namePhotoBook;
         private bool isClickPhoto = false;
+        private string namePhotoBook;
         private string namePhotoPresent;
         // ____________________________________________________________
 
@@ -32,7 +29,6 @@ namespace Libary_Manager.Libary_GUI
         // ____________________________________________________________
 
         private DTO_Sach sachDTO;
-        private DTO_ChiNhanh chiNhanhDTO;
 
         // ____________________________________________________________
 
@@ -51,12 +47,9 @@ namespace Libary_Manager.Libary_GUI
 
             this.chiNhanhBUS = new BUS_ChiNhanh();
 
-            // Load toàn bộ danh sách, SÁCH
-
+            // Load toàn bộ danh sách Sách
             DataTable data = sachBUS.getToanBoSach();
             Controller.isPhotoLoad(data, DgvSachThuVien);
-
-            valueChangeDgvSach = true;
 
             // Load toàn bộ Chi nhánh vào thêm sách
             CbbChiNhanh.DataSource = chiNhanhBUS.getToanBoSach();
@@ -126,7 +119,6 @@ namespace Libary_Manager.Libary_GUI
                 if (isClickPhoto)
                 {
                     namePhotoPresent = file.FileName;
-                    MessageBox.Show("Đã up");
                 }    
             }
         }
@@ -156,6 +148,9 @@ namespace Libary_Manager.Libary_GUI
                     sachDTO.photo = Controller.isSavedFile(namePhotoBook, "book");
                     sachDTO.ngayThem = DateTime.Now;
 
+                    // Thêm sách
+                    sachBUS.insertSach(sachDTO);
+
                     // Load sách mới thêm
                     DataTable data = sachBUS.getToanBoSach();
                     Controller.isPhotoLoad(data, DgvSachThuVien);
@@ -168,8 +163,6 @@ namespace Libary_Manager.Libary_GUI
                 {
                     Controller.isAlert("Vui lòng nhập thông tin hợp lệ!", "Lỗi xảy ra", MessageBoxIcon.Error); return;
                 }
-                // Thêm sách
-                sachBUS.insertSach(sachDTO);
             } 
             else
             {
@@ -197,21 +190,44 @@ namespace Libary_Manager.Libary_GUI
             }
         }
 
-        private void BtnChinhSuaSach_Click(object sender, EventArgs e)
+        private void Libary_NhanVien_FormClosing(object sender, FormClosingEventArgs e)
         {
-            sachDTO.tuaSach = TbTuaSach.Text;
-            sachDTO.tacGia = TbTacGia.Text;
-            sachDTO.nhaXuatBan = TbNhaXuatBan.Text;
-            sachDTO.namXuatBan = TbNamXuatBan.Text;
-            sachDTO.maChiNhanh = chiNhanhBUS.getMaChiNhanh(CbbChiNhanh.Text);
-            sachDTO.loiGioiThieu = TbLoiGioiThieu.Text;
-            sachDTO.soLuong = int.Parse(TbSoLuong.Text);
-
-            // Cập nhật sửa
-            sachBUS.updateSach(sachDTO);
+            Controller.isDeletePhotos();
         }
 
+        private void BtnChinhSuaSach_Click(object sender, EventArgs e)
+        {
+            if (isEmptys())
+            {
+                try
+                {
+                    sachDTO.tuaSach = TbTuaSach.Text;
+                    sachDTO.tacGia = TbTacGia.Text;
+                    sachDTO.nhaXuatBan = TbNhaXuatBan.Text;
+                    sachDTO.namXuatBan = TbNamXuatBan.Text;
+                    sachDTO.maChiNhanh = chiNhanhBUS.getMaChiNhanh(CbbChiNhanh.Text);
+                    sachDTO.loiGioiThieu = TbLoiGioiThieu.Text;
+                    if (namePhotoPresent != null)
+                    {
+                        string pathImage = sachBUS.prepareDeletePhoto(sachDTO);
+                        Controller.DeletedPhotos.Add(pathImage);
+                        sachDTO.photo = Controller.isSavedFile(namePhotoPresent, "book");
+                    }
+                    sachDTO.soLuong = int.Parse(TbSoLuong.Text);
 
+                    // Cập nhật sửa
+                    sachBUS.updateSach(sachDTO);
+                }
+                catch (Exception ex)
+                {
+                    Controller.isAlert("Vui lòng nhập thông tin hợp lệ!" + ex.Message, "Lỗi xảy ra", MessageBoxIcon.Error); return;
+                }
+            }
+            else
+            {
+                Controller.isAlert("Vui lòng chọn 1 hàng thông tin!", "Lỗi xảy ra", MessageBoxIcon.Error);
+            }
+        }
     }
 }
 

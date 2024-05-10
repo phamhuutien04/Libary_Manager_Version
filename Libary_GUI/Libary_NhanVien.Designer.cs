@@ -876,6 +876,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Libary_NhanVien";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Libary_NhanVien_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.DgvSachThuVien)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PtXemAnhTruoc)).EndInit();
             this.TabDoiMatKhau.ResumeLayout(false);

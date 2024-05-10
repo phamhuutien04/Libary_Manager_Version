@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,5 +91,20 @@ namespace Libary_Manager.Libary_DAO
                 return false;
             }
         }
+
+        public string getInfoBasedMaSach(DTO_Sach sachDTO)
+        {
+            try
+            {
+                string sql = "SELECT * FROM TV_Sach WHERE maSach = '" + sachDTO.maSach +"'";
+                DataTable data = Database.read(sql);
+                return data.Rows[0]["photo"].ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi databse " + ex.Message, "Lỗi xảy ra", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }    
     }
 }

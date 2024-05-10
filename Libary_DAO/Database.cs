@@ -12,7 +12,7 @@ namespace Libary_Manager.Libary_DAO
 {
     class Database : Connect
     {
-        public static DataTable read(string sql)
+        public static DataTable read(string sql, SqlParameter[] parameters = null)
         {
             try
             {
@@ -23,14 +23,42 @@ namespace Libary_Manager.Libary_DAO
                 query.Fill(table);
                 return table;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}"); 
                 return null;
             }
             finally
             {
                 Connect.Instance.GetConnection().Close();
             }
+        }
+
+        public static DataTable adapter(string sql, SqlParameter[] parameters = null)
+        {
+            DataTable table = new DataTable();
+            try
+            {
+                using (SqlConnection connection = Connect.Instance.GetConnection())
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    if (parameters != null)
+                    {
+                        command.Parameters.AddRange(parameters);
+                    }
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(table);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            return table;
         }
 
 
@@ -55,7 +83,7 @@ namespace Libary_Manager.Libary_DAO
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message);
+                Console.WriteLine($"Error: {ex.Message}");
                 return false;
             }
             finally
@@ -92,8 +120,9 @@ namespace Libary_Manager.Libary_DAO
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
                 return false;
             }
             finally
@@ -115,30 +144,15 @@ namespace Libary_Manager.Libary_DAO
 
                 return (cmd.ExecuteNonQuery() > 0);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
                 return false;
             }
             finally
             {
                 Connect.Instance.GetConnection().Close();
             }
-        }
-
-
-        public static Dictionary<string, object> crDty(params object[] keyValuePairs)
-        {
-            var data = new Dictionary<string, object>();
-
-            for (int i = 0; i < keyValuePairs.Length; i += 2)
-            {
-                if (keyValuePairs[i] is string key)
-                {
-                    data[key] = keyValuePairs[i + 1];
-                }
-            }
-
-            return data;
         }
     }
 }

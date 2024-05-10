@@ -1,8 +1,10 @@
 ﻿using Libary_Manager.Libary_DAO;
 using Libary_Manager.Libary_DTO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -86,5 +88,20 @@ namespace Libary_Manager.Libary_BUS
                 return false;
             };
         }
+
+
+        public string prepareDeletePhoto(DTO_Sach sachDTO)
+        {
+            try
+            {
+                string path = Controller._PATH_PHOTO_BOOK + sachDAO.getInfoBasedMaSach(sachDTO);
+                return path;
+            }
+            catch (Exception ex)
+            {
+                Controller.isAlert("Không thể chỉnh sửa sách!", ex.Message, System.Windows.Forms.MessageBoxIcon.Error);
+                return null;
+            };
+        }    
     }
 }
