@@ -281,6 +281,16 @@ namespace Libary_Manager.Libary_GUI
             DataTable data = sachBUS.dataPagination(_PAGE);
             Controller.isLoadDataPhoto(data, DgvSachThuVien, "photo");
         }
+
+        private void TabDoiMatKhau_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

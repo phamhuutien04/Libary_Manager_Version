@@ -15,8 +15,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Resources;
 using Guna.UI2.WinForms;
-using DevExpress.XtraBars.Docking2010.Base;
-using DevExpress.Utils.VisualEffects;
 using System.Text.RegularExpressions;
 
 namespace Libary_Manager.Libary_GUI.DoGia

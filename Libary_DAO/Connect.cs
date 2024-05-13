@@ -14,7 +14,7 @@ namespace Libary_Manager.Libary_DAO
 
         static Connect()
         {
-            _conn = new SqlConnection("Data Source=DESKTOP-PXD;Initial Catalog=Libary_Manager;Integrated Security=True");
+            _conn = new SqlConnection("Data Source=MSI\\SQLEXPRESS;Initial Catalog=Libary_Manager;Integrated Security=True");
         }
 
         public static Connect Instance

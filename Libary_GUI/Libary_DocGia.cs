@@ -1,6 +1,4 @@
-﻿using DevExpress.Xpo.DB.Helpers;
-using DevExpress.XtraBars.Navigation;
-using Libary_Manager.Libary_BUS;
+﻿using Libary_Manager.Libary_BUS;
 using Libary_Manager.Libary_DAO;
 using Libary_Manager.Libary_DTO;
 using Libary_Manager.Libary_GUI.DoGia;
