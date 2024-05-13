@@ -1,4 +1,5 @@
-﻿using Libary_Manager.Libary_DAO;
+﻿using Guna.UI2.WinForms;
+using Libary_Manager.Libary_DAO;
 using Libary_Manager.Libary_DTO;
 using System;
 using System.Collections;
@@ -19,14 +20,67 @@ namespace Libary_Manager.Libary_BUS
 
         private DAO_Sach sachDAO;
 
+        public static string maSachDetail;
+
+        public static ArrayList arrayTabDetail = new ArrayList();
+
+        public static TabControl tabControl = new TabControl();
+
         public BUS_Sach()
         {
             this.sachDAO = new DAO_Sach();
         }
 
+        public void setMaSach(string maSach)
+        {
+            maSachDetail = maSach;
+        }
+
+        public string getMaSach()
+        {
+            return maSachDetail;
+        }
+
+        public void setObjectSavedTabName(ArrayList array)
+        {
+            arrayTabDetail = array;
+        }
+
+        public ArrayList getObjectSavedTabName()
+        {
+            return arrayTabDetail;
+        }
+
+        public void setTabControl(TabControl tabTC)
+        {
+            tabControl = tabTC;
+        }    
+
+        public TabControl getTabControl()
+        {
+            return tabControl;
+        }
+
         public DataTable getToanBoSach()
         {
             return sachDAO.readSach();
+        }
+
+        public DataTable readSachEqualMaSach(string maSach)
+        {
+            try
+            {
+                if (sachDAO.readSachEqualMaSach(maSach) != null)
+                {
+                    return sachDAO.readSachEqualMaSach(maSach);
+                }
+                else return null;
+            }
+            catch (Exception ex)
+            {
+                Controller.isAlert("Không thể lấy dữ liệu sách: " + ex.Message, "Lỗi", System.Windows.Forms.MessageBoxIcon.Error);
+                return null;
+            };
         }
 
         public string createMaSach()

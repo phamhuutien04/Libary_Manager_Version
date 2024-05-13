@@ -34,7 +34,7 @@ namespace Libary_Manager.Libary_DAO
             }
         }
 
-        public static DataTable adapter(string sql, SqlParameter[] parameters = null)
+        public static DataTable adapter(string storedProcedureName, SqlParameter[] parameters = null)
         {
             DataTable table = new DataTable();
             try
@@ -42,7 +42,7 @@ namespace Libary_Manager.Libary_DAO
                 using (SqlConnection connection = Connect.Instance.GetConnection())
                 {
                     connection.Open();
-                    SqlCommand command = new SqlCommand(sql, connection);
+                    SqlCommand command = new SqlCommand(storedProcedureName, connection);
                     command.CommandType = CommandType.StoredProcedure;
 
                     if (parameters != null)

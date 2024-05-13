@@ -16,14 +16,20 @@ using System.Security.Permissions;
 using System.Collections;
 using Libary_Manager.Libary_DAO;
 using System.Diagnostics;
+using Libary_Manager.Libary_GUI.DoGia;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Libary_Manager.Libary_DTO;
+using System.Reflection;
 
 namespace Libary_Manager.Libary_BUS
 {
     class Controller
     {
         // Đường dẫn tới ảnh sách 
-        public static string _PATH_PHOTO_BOOK = @"C:\\Users\\Duc\\source\\repos\\Libary_Manager\\Photos\\Books\\";
-        
+        public static string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+        public static string _PATH_PHOTO_BOOK = projectDirectory + @"\Photos\Books\";
+        public static string _PATH_PHOTO_ITEM = projectDirectory + @"\Photos\Items\";
+
         // Thêm các ảnh muốn xóa vào 
         public static ArrayList DeletedPhotos = new ArrayList();
 
@@ -125,7 +131,7 @@ namespace Libary_Manager.Libary_BUS
 
 
         // Load dữ liệu 
-        public static void isLoadData(DataTable dataTable, DataGridView dataGridView)
+        public static void isLoadDataPhoto(DataTable dataTable, DataGridView dataGridView, string namePhoto)
         {
             dataGridView.Rows.Clear();
             foreach (DataRow row in dataTable.Rows)
@@ -137,7 +143,7 @@ namespace Libary_Manager.Libary_BUS
                     if (dataTable.Columns.Contains(columnName))
                     {
                         object cellValue = row[columnName];
-                        if (columnName == "photo")
+                        if (columnName == namePhoto)
                         {
                             if (cellValue != null && !string.IsNullOrEmpty(cellValue.ToString()))
                             {
@@ -184,6 +190,7 @@ namespace Libary_Manager.Libary_BUS
         }
 
 
+        // Trả về câu lệnh lấy số bản ghi phân trang
         public static string isHandlePagination(int page, int total)
         {
             int Offset;

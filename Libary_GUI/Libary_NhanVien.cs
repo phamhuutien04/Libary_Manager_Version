@@ -53,7 +53,7 @@ namespace Libary_Manager.Libary_GUI
 
             // Load toàn bộ danh sách Sách
             DataTable data = sachBUS.dataPagination(_PAGE);
-            Controller.isLoadData(data, DgvSachThuVien);
+            Controller.isLoadDataPhoto(data, DgvSachThuVien, "photo");
 
             // Load toàn bộ Chi nhánh vào thêm sách
             CbbChiNhanh.DataSource = chiNhanhBUS.getToanBoSach();
@@ -156,7 +156,7 @@ namespace Libary_Manager.Libary_GUI
 
                     // Load sách mới thêm
                     DataTable data = sachBUS.getToanBoSach();
-                    Controller.isLoadData(data, DgvSachThuVien);
+                    Controller.isLoadDataPhoto(data, DgvSachThuVien, "photo");
 
                     // Reset value 
                     CbbChiNhanh.SelectedIndex = 0;
@@ -218,7 +218,7 @@ namespace Libary_Manager.Libary_GUI
 
                     // Load sách mới chỉnh
                     DataTable data = sachBUS.getToanBoSach();
-                    Controller.isLoadData(data, DgvSachThuVien);
+                    Controller.isLoadDataPhoto(data, DgvSachThuVien, "photo");
                 }
                 catch (Exception ex)
                 {
@@ -236,6 +236,51 @@ namespace Libary_Manager.Libary_GUI
             Controller.isDeletePhotos();
         }
 
+        private void BtnQuayLai_Click(object sender, EventArgs e)
+        {
+            if (_PAGE < 1)
+            {
+                _PAGE -= 1;
+            }
+            else
+            {
+                _PAGE = 1;
+            }
+            // Load toàn bộ danh sách Sách
+            DataTable data = sachBUS.dataPagination(_PAGE);
+            Controller.isLoadDataPhoto(data, DgvSachThuVien, "photo");
+        }
+
+        private void BtnTiepTuc_Click(object sender, EventArgs e)
+        {
+            if (_PAGE < BUS_Sach._TOTAL_BOOK)
+            {
+                _PAGE += 1;
+            }
+            else
+            {
+                _PAGE = BUS_Sach._TOTAL_BOOK;
+            }
+            // Load toàn bộ danh sách Sách
+            DataTable data = sachBUS.dataPagination(_PAGE);
+            Controller.isLoadDataPhoto(data, DgvSachThuVien, "photo");
+        }
+
+        private void BtnTrangDau_Click(object sender, EventArgs e)
+        {
+            _PAGE = 1;
+            // Load toàn bộ danh sách Sách
+            DataTable data = sachBUS.dataPagination(_PAGE);
+            Controller.isLoadDataPhoto(data, DgvSachThuVien, "photo");
+        }
+
+        private void BtnTrangCuoi_Click(object sender, EventArgs e)
+        {
+            _PAGE = Convert.ToInt32(Math.Ceiling((double)BUS_Sach._TOTAL_BOOK / Controller._MAX_PAGE));
+            // Load toàn bộ danh sách Sách
+            DataTable data = sachBUS.dataPagination(_PAGE);
+            Controller.isLoadDataPhoto(data, DgvSachThuVien, "photo");
+        }
     }
 }
 

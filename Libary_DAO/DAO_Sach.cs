@@ -29,6 +29,24 @@ namespace Libary_Manager.Libary_DAO
             }
         }
 
+        public DataTable readSachEqualMaSach(string maSach)
+        {
+            try
+            {
+                string sql = "SELECT maSach, tuaSach, photo, tacGia, nhaXuatBan, namXuatBan, " +
+                    "TRIM(cn.chiNhanh) as chiNhanh, TRIM(cn.diaChi) as diaChi, loiGioiThieu, soLuong, TV_Sach.ngayThem " +
+                    "FROM TV_ChiNhanh cn " +
+                    "INNER JOIN TV_Sach ON TV_Sach.maChiNhanh = cn.id " +
+                    "WHERE maSach = '" + maSach + "' ORDER BY TV_Sach.id DESC";
+                return Database.read(sql);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi databse " + ex.Message, "Lỗi xảy ra", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
         public int getRows()
         {
             try
